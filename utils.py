@@ -8,7 +8,7 @@ class Utils(object):
         pass
 
     @staticmethod
-    def generate_salt():
+    def generate_salt(length):
         return ''.join(
             random.choice(
                 string.ascii_uppercase + string.ascii_lowercase + string.digits
@@ -24,13 +24,13 @@ class Config(object):
         with open(self.filename, 'r') as conf:
             self.conf = load(conf)
 
-    def get(self, key=None, default):
+    def get(self, default, key=None):
         if key is None:
             return None
-        elif self.config[key] is not None:
-            return self.config[key]
-        else:
+        elif self.config is None:
             return default
+        else:
+            return self.config[key]
 
     def set(self, key, value):
         """

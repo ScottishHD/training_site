@@ -1,5 +1,5 @@
 import os
-from . import create_app
+from sha_training_app import create_app
 
 config_name = os.getenv('FLASK_CONFIG', 'development')
 app = create_app(config_name)

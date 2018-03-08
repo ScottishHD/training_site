@@ -1,8 +1,8 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from . import db, login_manager
-from .utils import Utils
+from run import db, login_manager
+from utils import Utils
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -43,12 +43,17 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return User.query.get(int(user_id))
+        return User.query.get(int(self.user_id))
 
 class Account(db.Model):
     __tablename__ = 'account'
 
+    account_index = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
     account_id = db.Column(
         db.Integer,
-        db.ForeginKey('users.user_id')
+        db.ForeignKey('users.user_id')
     )
