@@ -11,13 +11,13 @@
 </head>
 
 <body>
-{% if navigation is defined %}
-    {% for name, link in navigation %}
-        <li class="nav-item flex-grow">
-            <a href="{{ url_for(link) }}" class="nav-link fs20">{{ name }}</a>
-        </li>
-    {% endfor %}
-{% endif %}
+<ul class="">
+{% for item in nav.top %}
+    <li class="nav-item flex-grow {{ 'active' if item.is_active else '' }}">
+        <a href="{{ item.url }}" class="nav-link fs20">{{ item.label }}</a>
+    </li>
+{% endfor %}
+</ul>
 {% block content %}
 {% endblock %}
 {% block scripts %}

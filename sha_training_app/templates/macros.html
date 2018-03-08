@@ -1,0 +1,28 @@
+{% macro m_primary_form(form) %}
+    {% for field in form %}
+        {% if field.type == 'SubmitField' %}
+            <div class="form-group">
+                {{ field(class='form-control btn btn-outline-primary') }}
+            </div>
+        {% elif field.type == 'BooleanField' %}
+            <div class="form-check mb-3">
+                {{ field(class="form-check-input") }}{{ field.label(class="form-check-label") }}
+            </div>
+        {% elif field.type == 'FileField' %}
+            <div class="form-group row">
+                <div class="col-2">
+                    {{ field.label }}
+                </div>
+                <div class="col-md">
+                    {{ field(class="form-control-file") }}
+                </div>
+            </div>
+        {% elif field.type != 'CSRFTokenField' %}
+            <div class="form-group">
+                {{ field.label(class="sr-only") }} {{ field(class="form-control", placeholder=field.label.text) }}
+            </div>
+        {% else %}
+            {{ field }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
