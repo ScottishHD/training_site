@@ -6,7 +6,8 @@
             </div>
         {% elif field.type == 'BooleanField' %}
             <div class="form-check mb-3">
-                {{ field(class="form-check-input") }}{{ field.label(class="form-check-label") }}
+                {{ field.label(class="form-check-label") }}
+                {{ field(class="form-check-input") }}
             </div>
         {% elif field.type == 'FileField' %}
             <div class="form-group row">
@@ -18,8 +19,13 @@
                 </div>
             </div>
         {% elif field.type != 'CSRFTokenField' %}
-            <div class="form-group">
-                {{ field.label(class="sr-only") }} {{ field(class="form-control", placeholder=field.label.text) }}
+            <div class="form-group row">
+                <div class="col-sm-2">
+                    {{ field.label }}
+                </div>
+                <div class="col-sm-10">
+                    {{ field(class="form-control") }}
+                </div>
             </div>
         {% else %}
             {{ field }}

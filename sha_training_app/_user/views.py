@@ -1,7 +1,8 @@
 from . import user
 
+
 @user.route('/')
-def user_home():
+def homepage():
     return """
     <h1>User Homepage</h1>
     """
