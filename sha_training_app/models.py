@@ -45,6 +45,11 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return User.query.get(int(self.user_id))
 
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.password = password
+
 class Account(db.Model):
     __tablename__ = 'account'
 
@@ -53,7 +58,53 @@ class Account(db.Model):
         primary_key=True
     )
 
-    account_id = db.Column(
+    fk_account_id = db.Column(
         db.Integer,
         db.ForeignKey('users.user_id')
+    )
+
+class Course(db.Model):
+    __tablename__ = 'course'
+
+    course_id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    title = db.Column(
+        db.String(64),
+        unique=True
+    )
+
+    description = db.Column(
+        db.String(256)
+    )
+
+    modules = db.Column(
+        db.ARRAY(db.Integer)
+    )
+
+    image = db.Column(
+        db.String(256)
+    )
+
+class Module(db.Model):
+    __tablename__ = 'module'
+
+    module_id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    title = db.Column(
+        db.String(64),
+        unique=True
+    )
+
+    description = db.Column(
+        db.String(256)
+    )
+
+    sets = db.Column(
+        db.ARRAY(db.Integer) # An array of integers relating to the ids of each of the sets
     )
