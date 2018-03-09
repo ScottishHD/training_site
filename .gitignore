@@ -4,4 +4,8 @@ wenv/
 instance/
 __pycache__/
 sha_training_app/__pycache__/
+sha_training_app/_admin/__pycache__/
+sha_training_app/_course/__pycache__/
+sha_training_app/_home/__pycache__/
+sha_training_app/_user/__pycache__/
 *.pyc
