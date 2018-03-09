@@ -2,3 +2,6 @@ venv/
 wenv/
 .idea/
 instance/
+__pycache__/
+sha_training_app/__pycache__/
+*.pyc
