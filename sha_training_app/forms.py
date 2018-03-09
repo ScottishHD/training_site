@@ -13,3 +13,9 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = StringField('Password', validators=[DataRequired()])
     submit = SubmitField('Register')
+
+
+class CreateCourseForm(FlaskForm):
+    course_title = StringField('Title', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired()])
+    # Could we suggest modules based on what is entered,  using ajax

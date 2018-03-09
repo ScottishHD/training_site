@@ -33,4 +33,7 @@ def create_app(config_name):
     from sha_training_app._user import user as user_blueprint
     app.register_blueprint(user_blueprint, url_prefix='/user')
 
+    from sha_training_app._course import course as course_blueprint
+    app.register_blueprint(course_blueprint, url_prefix='/course')
+
     return app

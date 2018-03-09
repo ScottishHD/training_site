@@ -4,6 +4,10 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+.nav-link {
+    color: #004851;
+}
+
 .bg-green {
   background-color: #004851;
 }

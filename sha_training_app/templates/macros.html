@@ -32,3 +32,41 @@
         {% endif %}
     {% endfor %}
 {% endmacro %}
+
+{#
+    Iterates through a list of courses and renders them as a card
+#}
+{% macro list_course(course) %}
+    <div class="card">
+        <div class="card-image">
+            <img src="{{ course.thumbnail }}" alt="{{ course.thumb.description }}">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ course.title }}</h5>
+            <p class="card-text">
+                {{ course.description }}
+            </p>
+            {#
+                    Need to look at how this routing will be done
+                    since it will need to take the person back to
+                    the point where they finished last time
+             #}
+            {% if current_user.is_authenticated %}
+                {% if not course.is_complete %}
+                    <a href="{{ url_for('course.continue', course_id=course.id, module=course.current_module) }}"
+                       class="btn btn-primary">Continue</a>
+                {% else %}
+                    <a href="{{ url_for('course.dash', course_route=course.route) }}"
+                       class="btn btn-primary">Module Listing</a>
+                    <span class="badge badge-success">Complete</span>
+                {% endif %}
+            {% else %}
+                {#
+                    This will cause the person to be asked to log in or register on the site
+                #}
+                <a href="{{ url_for('course.continue', course_id=course.id, module=course.current_module) }}"
+                   class="btn btn-primary">Enroll</a>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}

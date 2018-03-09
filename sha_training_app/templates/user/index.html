@@ -1,31 +1,10 @@
 {% extends 'layout.html' %}
+{% import 'macros.html' as macros with context %}
 {% block content %}
     {% if current_user.is_authenticated %}
         <h2>Welcome {{ current_user.username }}</h2>
     {% endif %}
-
-    {% for course in enrolled_courses %}
-        <div class="card">
-            <div class="card-image">
-                <img src="{{ course.thumbnail }}" alt="{{ course.thumb.description }}">
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">{{ course.title }}</h5>
-                <p class="card-text">
-                    {{ course.description }}
-                </p>
-                {#
-                    Need to look at how this routing will be done
-                    since it will need to take the person back to
-                    the point where they finished last time
-                #}
-                {% if not course.is_complete %}
-                    <a href="{{ url_for('course.continue', course_id=course.id, module=course.current_module) }}" class="btn btn-primary">Continue</a>
-                {% else %}
-                    <a href="{{ url_for('course.dash', course_route=course.route) }}" class="btn btn-primary">Module Listing</a>
-                    <span class="badge badge-success">Complete</span>
-                {% endif %}
-            </div>
-        </div>
+    {% for course in courses %}
+        {{ macros.list_course(course) }}
     {% endfor %}
 {% endblock %}

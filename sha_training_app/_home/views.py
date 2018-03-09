@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for
-from flask_login import login_user
+from flask_login import login_user, logout_user
 from . import home
-from ..models import  User
+from ..models import User
 from ..forms import LoginForm, RegisterForm
 from .. import nav
 
@@ -11,6 +11,7 @@ nav.Bar('top', [
     nav.Item('Register', 'home.register'),
     nav.Item('Login', 'home.login')
 ])
+
 
 @home.route('/')
 def homepage():
@@ -26,8 +27,8 @@ def register():
         # Create a new user from the form data
         user = User(
             username=register_form.username.data,
-            email = register_form.email.data,
-            password = register_form.password.data
+            email=register_form.email.data,
+            password=register_form.password.data
         )
 
         # At this point the user has been registered and should
@@ -48,3 +49,9 @@ def login():
             redirect(url_for('user.account'))
 
     return render_template('home/login.html', form=login_form)
+
+
+@home.route('/logout')
+def logout():
+    logout_user() # This should kill the session
+    return redirect(url_for('home.homepage'))

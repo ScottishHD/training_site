@@ -12,6 +12,9 @@
 </head>
 
 <body>
+<nav class="navbar bg-green justify-content-center">
+    <a href="{{ url_for('home.homepage') }}" class="text-white navbar-brand text-large">SHA Training</a>
+</nav>
 <ul class="nav nav-tabs justify-content-between">
     {% for item in nav.top %}
         <li class="nav-item flex-grow">
