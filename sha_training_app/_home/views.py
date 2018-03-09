@@ -40,7 +40,7 @@ def register():
 
 @home.route('/login', methods=['GET', 'POST'])
 def login():
-    login_form = LoginForm
+    login_form = LoginForm()
 
     if login_form.validate_on_submit():
         user = User.query.filter_by(email=login_form.email.data).first()

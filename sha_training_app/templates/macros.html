@@ -2,7 +2,7 @@
     {% for field in form %}
         {% if field.type == 'SubmitField' %}
             <div class="form-group">
-                {{ field(class='form-control btn btn-outline-primary') }}
+                {{ field(class='form-control btn btn-secondary') }}
             </div>
         {% elif field.type == 'BooleanField' %}
             <div class="form-check mb-3">

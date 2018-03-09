@@ -9,6 +9,7 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 nav = Navigation()
 
+
 def create_app(config_name):
     app = Flask(__name__, instance_relative_config=True)
     nav.init_app(app)
@@ -19,7 +20,7 @@ def create_app(config_name):
 
     login_manager.init_app(app)
     login_manager.login_message = 'You must be logged in to access this page!'
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'home.login'
 
     migrate = Migrate(app, db)
     from . import models

@@ -1,3 +1,4 @@
+/*noinspection CssUnknownTarget*/
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 * {
@@ -21,5 +22,5 @@
 }
 
 .fs-20 {
-  font-size: 25px;
+  font-size: 1.563rem !important;
 }
