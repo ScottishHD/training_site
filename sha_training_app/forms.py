@@ -5,13 +5,13 @@ from wtforms.validators import DataRequired, Email, EqualTo
 class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[DataRequired()])
-    password = StringField('Password', validators=[DataRequired()])
-    confirm_password = StringField('Confirm Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = StringField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
 
@@ -29,7 +29,7 @@ class Module(FlaskForm):
 class OutcomeForm(FlaskForm):
     content = FileField('Content', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
-    
+
 
 
 class Set(FlaskForm):

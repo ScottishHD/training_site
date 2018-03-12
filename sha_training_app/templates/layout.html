@@ -12,20 +12,32 @@
 </head>
 
 <body>
-<nav class="navbar bg-green justify-content-center">
-    <a href="{{ url_for('home.homepage') }}" class="text-white navbar-brand text-large">SHA Training</a>
-</nav>
-<ul class="nav nav-tabs justify-content-between">
-    {% for item in nav.top %}
-        <li class="nav-item flex-grow">
-            <a href="{{ item.url }}" class="nav-link fs-20{{ ' active' if item.is_active else '' }}">{{ item.label }}</a>
-        </li>
-    {% endfor %}
-</ul>
-<div class="container mt-5">
+  <div class="container-fluid h-100">
+      <div class="row h-100">
+          <aside class="col-12 col-md-2 p-0 bg-green">
+              <nav class="navbar navbar-expand navbar-dark bg-green flex-md-column flex-row align-items-start py-2">
+                  <div class="collapse navbar-collapse">
+                      <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                        <li class="nav-item">
+                            <a class="nav-link pl-0 text-nowrap active brand-fs" href="#"><i class="fa fa-bullseye fa-fw"></i><span class="font-weight-bold">SHA TRAINING</span></a>
+                        </li>
+                        {% for item in nav.side %}
+                          <li class="nav-item">
+                              <a class="nav-link pl-0 text-nowrap text-white menu-fs {{ 'active' if item.is_active else ''}}" href="{{ item.url }}"><i class="fa fa-bullseye fa-fw"></i><span class="font-weight-bold">{{item.label}}</span></a>
+                          </li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              </nav>
+          </aside>
+
+    <main class="col bg-faded py-3">
     {% block content %}
     {% endblock %}
+    </main>
+
     {% block scripts %}
+
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
                 integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
                 crossorigin="anonymous"></script>
@@ -37,6 +49,6 @@
                 crossorigin="anonymous"></script>
     {% endblock %}
 </div>
+</div>
 </body>
-
 </html>

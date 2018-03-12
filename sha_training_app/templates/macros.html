@@ -51,7 +51,7 @@
                     since it will need to take the person back to
                     the point where they finished last time
              #}
-            {% if current_user.is_authenticated %}
+            {% if not current_user.is_anonymouse %}
                 {% if not course.is_complete %}
                     <a href="{{ url_for('course.continue', course_id=course.id, module=course.current_module) }}"
                        class="btn btn-primary">Continue</a>

@@ -38,7 +38,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_HOST = config.get('localhost', 'database_host')
     SQLALCHEMY_DATABASE_NAME = config.get('sha_training', 'database_name')
     SQLALCHEMY_DATABASE_PORT = config.get(3306, 'database_port')
-    SQLALCHEMY_DATABASE_URI = 'mysql//rootlocalhost/sha_training'
+    # SQLALCHEMY_DATABASE_URI = 'mysql//root@localhost/sha_training'
     # SQLALCHEMY_DATABASE_URI = '{}//{}:{}@{}:{}/{}'.format(SQLALCHEMY_DATABASE_DRIVER, SQLALCHEMY_DATABASE_USERNAME, SQLALCHEMY_DATABASE_PASSWORD, SQLALCHEMY_DATABASE_HOST, SQLALCHEMY_DATABASE_PORT, SQLALCHEMY_DATABASE_NAME)
 
     SECURITY_PASSWORD_SALT = load_salt()

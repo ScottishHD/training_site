@@ -4,9 +4,10 @@ from . import home
 from ..models import User
 from ..forms import LoginForm, RegisterForm
 from .. import nav
+from sha_training_app import db
 
 # Need to make this dynamic somehow
-nav.Bar('top', [
+nav.Bar('side', [
     nav.Item('Home', 'home.homepage'),
     nav.Item('Register', 'home.register'),
     nav.Item('Login', 'home.login')
@@ -31,6 +32,9 @@ def register():
             password=register_form.password.data
         )
 
+        db.session.add(user)
+        db.session.commit()
+
         # At this point the user has been registered and should
         # have been sent a confirmation email
         return render_template('home/registration_success.html')
@@ -44,9 +48,14 @@ def login():
 
     if login_form.validate_on_submit():
         user = User.query.filter_by(email=login_form.email.data).first()
+        print(user.verify_password(login_form.password.data))
         if user is not None and user.verify_password(login_form.password.data):
             login_user(user)
-            redirect(url_for('user.account'))
+            redirect(url_for('user.account', user_id=user.id))
+        else:
+            print('Something went wrong')
+    else:
+        print('Form is not validating')
 
     return render_template('home/login.html', form=login_form)
 

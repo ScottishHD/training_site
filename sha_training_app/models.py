@@ -7,7 +7,7 @@ from . import db, login_manager
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
-    user_id = db.Column(
+    id = db.Column(
         db.Integer,
         primary_key=True
     )
@@ -43,7 +43,7 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return User.query.get(int(self.user_id))
+        return User.query.get(int(self.id))
 
     def __init__(self, username, email, password):
         self.username = username
@@ -53,7 +53,7 @@ class User(UserMixin, db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.filter_by(int(user_id))
+    return User.query.get(int(user_id))
 
 
 class Account(db.Model):
@@ -66,7 +66,7 @@ class Account(db.Model):
 
     fk_account_id = db.Column(
         db.Integer,
-        db.ForeignKey('users.user_id')
+        db.ForeignKey('users.id')
     )
 
     fk_account_role = db.Column(

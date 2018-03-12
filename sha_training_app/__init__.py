@@ -5,13 +5,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_navigation import Navigation
 from config import app_config
 
+app = Flask(__name__, instance_relative_config=True)
+
 db = SQLAlchemy()
 login_manager = LoginManager()
 nav = Navigation()
 
-
 def create_app(config_name):
-    app = Flask(__name__, instance_relative_config=True)
     nav.init_app(app)
 
     app.config.from_object(app_config[config_name])

@@ -1,26 +1,30 @@
 /*noinspection CssUnknownTarget*/
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
 
 * {
-  font-family: 'Montserrat', sans-serif;
-}
-
-.nav-link {
-    color: #004851;
+  font-family: 'Raleway', sans-serif;
 }
 
 .bg-green {
   background-color: #004851;
 }
 
-.text-large {
-  font-size: 2.5rem;
+.active {
+  color: #d2d755!important;
 }
 
-.flex-grow {
-    flex: 1 0 auto;
+body, html {
+    height: 100%;
 }
 
-.fs-20 {
-  font-size: 1.563rem !important;
+.brand-fs {
+  font-size: 40px;
+}
+
+.menu-fs {
+  font-size: 20px;
+}
+
+.pt-20 {
+  padding-top: 20%;
 }
