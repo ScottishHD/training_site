@@ -9,8 +9,19 @@ from . import user
 def homepage():
     return render_template('user/index.html')
 
-@user.route('/account/<user_id>')
+@user.route('/account')
 @login_required
-def account(user_id):
-    user = User.query.filter_by(id=user_id)
-    return render_template('user/index.html', user=user)
+def account():
+    return render_template('user/index.html')
+
+
+@user.route('/enrol/<course_id>', methods=['GET', 'POST'])
+@login_required
+def enrol(course_id):
+    return redirect(url_for('home.homepage'))
+
+
+@user.route('/enrolled')
+def course_listing():
+    courses = None
+    return render_template('user/courses.html', courses=courses)

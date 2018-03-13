@@ -39,7 +39,7 @@
 {% macro list_course(course) %}
     <div class="card">
         <div class="card-image">
-            <img src="{{ course.thumbnail }}" alt="{{ course.thumb.description }}">
+            <img src="{{ course.thumbnail }}" alt="{{ course.image.description }}" class="img-thumbnail">
         </div>
         <div class="card-body">
             <h5 class="card-title">{{ course.title }}</h5>
@@ -64,8 +64,8 @@
                 {#
                     This will cause the person to be asked to log in or register on the site
                 #}
-                <a href="{{ url_for('course.continue', course_id=course.id, module=course.current_module) }}"
-                   class="btn btn-primary">Enroll</a>
+                <!-- <a href="{{ url_for('course.continue', course_id=course.id, module=course.current_module) }}"
+                   class="btn btn-primary">Enroll</a> -->
             {% endif %}
         </div>
     </div>

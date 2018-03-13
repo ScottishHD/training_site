@@ -1,0 +1,6 @@
+{% extends 'layout.html' %}
+{% import 'macros.html' as _macros %}
+{% block content %}
+  <input type="number" id="no_questions" ><a onclick="createFields" class="btn btn-success">Create</a>
+  {{ _macros.m_primary_form(form) }}
+{% endblock %}

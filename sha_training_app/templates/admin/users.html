@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <table class="table">
+    <thead>
+      <td scope="col">Name</td>
+      <td scope="col">Username</td>
+      <td scope="col">Email</td>
+      <td scope="col">Date Joined</td>
+      <td scope="col"></td>
+    </thead>
+    {% for user in users %}
+      <tr>
+        <td>{{ user.first_name }} {{user.last_name}}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.date_joined }}</td>
+        <td>
+          <a href="{{ url_for('admin.delete_user', user_id=user.id) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

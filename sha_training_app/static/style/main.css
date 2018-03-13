@@ -1,8 +1,22 @@
 /*noinspection CssUnknownTarget*/
-@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Poppins');
 
 * {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 1.5px;
+}
+
+.table thead tr td {
+  color: #004851;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .bg-green {
@@ -15,6 +29,7 @@
 
 body, html {
     height: 100%;
+    background-color: #fff;
 }
 
 .brand-fs {
@@ -27,4 +42,16 @@ body, html {
 
 .pt-20 {
   padding-top: 20%;
+}
+
+.card.ml-3 {
+  position: relative;
+}
+
+.card-title {
+  text-transform: uppercase;
+}
+
+.card-footer {
+  border-top: none;
 }

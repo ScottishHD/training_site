@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import PasswordField, StringField, SubmitField, ValidationError, TextAreaField, BooleanField, FileField
+from wtforms import PasswordField, StringField, SubmitField, ValidationError, TextAreaField, BooleanField, FileField, FieldList, FormField
 from wtforms.validators import DataRequired, Email, EqualTo
 
 class RegisterForm(FlaskForm):
@@ -15,6 +15,11 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
+class QuestionForm(FlaskForm):
+    question = StringField('Question', validators=[DataRequired()])
+    answer = StringField('Answer', validators=[DataRequired()])
+
+
 class CreateCourseForm(FlaskForm):
     course_title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
@@ -24,6 +29,8 @@ class CreateCourseForm(FlaskForm):
 class Module(FlaskForm):
     module_title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
+    number_of_questions = IntegerField('Number of questions')
+    questions = FieldList(FormField(QuestionForm))
     submit = SubmitField('Create')
 
 class OutcomeForm(FlaskForm):

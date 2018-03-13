@@ -75,8 +75,45 @@ class Account(db.Model):
     )
 
     courses = db.Column(
+        db.String(64),
+        nullable=True
+    )
+
+    date_joined = db.Column(
+        db.DateTime
+    )
+
+    first_name = db.Column(
         db.String(64)
     )
+
+    last_name = db.Column(
+        db.String(64)
+    )
+
+class Organisation(db.Model):
+    __tablename__ = 'organisation'
+
+    organisation_id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    display_name = db.Column(
+        db.String(64)
+    )
+
+    fk_contact_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id'),
+        unique=True
+    )
+
+    size = db.Column(
+        db.Integer,
+        nullable=True
+    )
+
 
 
 class Role(db.Model):
@@ -110,12 +147,21 @@ class Course(db.Model):
         db.String(256)
     )
 
+    author = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id')
+    )
+
     modules = db.Column(
         db.String(256)  # Array of integers {{module_id: 1},{module_id: 2},{module_id: 4},{module_id: 6}}
     )
 
     image = db.Column(
         db.String(256)
+    )
+
+    modified = db.Column(
+        db.DateTime # Not 100% sure about this
     )
 
 

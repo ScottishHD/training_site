@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 from . import home
-from ..models import User
+from ..models import User, Account, Role, Course
 from ..forms import LoginForm, RegisterForm
 from .. import nav
 from sha_training_app import db
@@ -16,7 +16,14 @@ nav.Bar('side', [
 
 @home.route('/')
 def homepage():
-    return render_template('home/index.html')
+    courses = Course.query.limit(5)
+    return render_template('home/index.html', courses=courses)
+
+
+@home.route('/courses')
+def course_listing():
+    courses = Course.query.all()
+    return render_template('home/courses.html', courses=courses, standalone=True)
 
 
 @home.route('/register', methods=['GET', 'POST'])
@@ -35,6 +42,14 @@ def register():
         db.session.add(user)
         db.session.commit()
 
+        account = Account(
+            fk_account_id=user.id,
+            fk_account_role=0
+        )
+
+        db.session.add(account)
+        db.session.commit()
+
         # At this point the user has been registered and should
         # have been sent a confirmation email
         return render_template('home/registration_success.html')
@@ -51,11 +66,7 @@ def login():
         print(user.verify_password(login_form.password.data))
         if user is not None and user.verify_password(login_form.password.data):
             login_user(user)
-            redirect(url_for('user.account', user_id=user.id))
-        else:
-            print('Something went wrong')
-    else:
-        print('Form is not validating')
+            return redirect(url_for('user.account'))
 
     return render_template('home/login.html', form=login_form)
 

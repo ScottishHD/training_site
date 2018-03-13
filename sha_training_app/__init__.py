@@ -32,7 +32,7 @@ def create_app(config_name):
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
     from sha_training_app._user import user as user_blueprint
-    app.register_blueprint(user_blueprint, url_prefix='/user')
+    app.register_blueprint(user_blueprint)
 
     from sha_training_app._course import course as course_blueprint
     app.register_blueprint(course_blueprint, url_prefix='/course')
