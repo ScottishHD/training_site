@@ -2,17 +2,17 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from flask_navigation import Navigation
+from .site_nav import configure_nav
 from config import app_config
 
 app = Flask(__name__, instance_relative_config=True)
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-nav = Navigation()
+
 
 def create_app(config_name):
-    nav.init_app(app)
+    configure_nav(app)
 
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')

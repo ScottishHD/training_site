@@ -3,15 +3,7 @@ from flask_login import login_user, logout_user, current_user
 from . import home
 from ..models import User, Account, Role, Course
 from ..forms import LoginForm, RegisterForm
-from .. import nav
 from sha_training_app import db
-
-# Need to make this dynamic somehow
-nav.Bar('side', [
-    nav.Item('Home', 'home.homepage'),
-    nav.Item('Register', 'home.register'),
-    nav.Item('Login', 'home.login')
-])
 
 
 @home.route('/')
