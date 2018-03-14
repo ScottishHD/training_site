@@ -9,6 +9,14 @@ class RegisterForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
+
+class OrganisationRegisterForm(FlaskForm):
+    organisation_name = StringField('Organisation Name', validators=[DataRequired()])
+    assigned_person_email = StringField('Assigned Person Email', validators=[DataRequired(), Email()])
+    size = IntegerField('Size of Organisation')
+    submit = SubmitField('Create Organisation')
+
+
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])

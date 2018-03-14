@@ -8,9 +8,17 @@ def my_nav_bar():
     return Navbar(
         current_app.config.get('SITE_NAME'),
         View('Home', 'home.homepage'),
-        View('Register', 'home.register'),
-        View('Home', 'home.login'),
     )
+
+
+def unauthenticated_nav():
+    nav = list(my_nav_bar().items)
+
+    if not current_user.is_authenticated:
+        nav.extend([
+            View('Login', 'home.login'),
+            View('Register', 'home.register')
+        ])
 
 
 def sec_nav_bar():
@@ -18,7 +26,7 @@ def sec_nav_bar():
 
     if current_user.is_authenticated:
         secnav.extend([
-            View('Blog Editor', 'blogging.editor'),
+            View('Account', 'blogging.editor'),
             View('Profile', 'simple_page.profile'),
         ])
 
