@@ -39,14 +39,15 @@ def register():
             password=register_form.password.data
         )
 
-        db.session.add(user)
-        db.session.commit()
+        role = Role.query.filter_by(role_id=1).first()
 
         account = Account(
-            fk_account_id=user.id,
-            fk_account_role=0
+            role_id=role.role_id
         )
 
+        user.account.append(account)
+
+        db.session.add(user)
         db.session.add(account)
         db.session.commit()
 
@@ -59,6 +60,9 @@ def register():
 
 @home.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('user.account'))
+
     login_form = LoginForm()
 
     if login_form.validate_on_submit():
@@ -73,5 +77,5 @@ def login():
 
 @home.route('/logout')
 def logout():
-    logout_user() # This should kill the session
+    logout_user()  # This should kill the session
     return redirect(url_for('home.homepage'))

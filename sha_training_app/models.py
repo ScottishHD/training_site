@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.orm import relationship, backref
 
 from . import db, login_manager
 
@@ -26,6 +27,12 @@ class User(UserMixin, db.Model):
 
     password_hash = db.Column(
         db.String(128)
+    )
+
+    account = relationship(
+        'Account',
+        backref='user',
+        uselist=False
     )
 
     @property
@@ -64,12 +71,18 @@ class Account(db.Model):
         primary_key=True
     )
 
-    fk_account_id = db.Column(
+    user_id = db.Column(
         db.Integer,
         db.ForeignKey('users.id')
     )
 
-    fk_account_role = db.Column(
+    role = relationship(
+        'Role',
+        backref='role',
+        uselist=False
+    )
+
+    role_id = db.Column(
         db.Integer,
         db.ForeignKey('roles.role_id')
     )
@@ -91,6 +104,7 @@ class Account(db.Model):
         db.String(64)
     )
 
+
 class Organisation(db.Model):
     __tablename__ = 'organisation'
 
@@ -103,17 +117,21 @@ class Organisation(db.Model):
         db.String(64)
     )
 
-    fk_contact_id = db.Column(
+    contact = relationship(
+        'User',
+        backref='user',
+        uselist=False
+    )
+
+    contact_id = db.Column(
         db.Integer,
-        db.ForeignKey('users.id'),
-        unique=True
+        db.ForeignKey('users.id')
     )
 
     size = db.Column(
         db.Integer,
         nullable=True
     )
-
 
 
 class Role(db.Model):
@@ -152,8 +170,14 @@ class Course(db.Model):
         db.ForeignKey('users.id')
     )
 
-    modules = db.Column(
-        db.String(256)  # Array of integers {{module_id: 1},{module_id: 2},{module_id: 4},{module_id: 6}}
+    module = relationship(
+        'Module',
+        backref='modules'
+    )
+
+    module_id = db.Column(
+        db.Integer,
+        db.ForeignKey('modules.module_id')
     )
 
     image = db.Column(
@@ -161,7 +185,7 @@ class Course(db.Model):
     )
 
     modified = db.Column(
-        db.DateTime # Not 100% sure about this
+        db.DateTime  # Not 100% sure about this
     )
 
 
@@ -182,15 +206,21 @@ class Module(db.Model):
         db.String(256)
     )
 
-    sets = db.Column(
-        db.String(256)  # An array of integers relating to the ids of each of the sets
+    outcome_id = db.Column(
+        db.Integer,
+        db.ForeignKey('outcomes.outcome_id')
+    )
+
+    outcomes = relationship(
+        'Outcome',
+        backref='modules'
     )
 
 
-class Set(db.Model):
-    __tablename__ = 'sets'
+class Outcome(db.Model):
+    __tablename__ = 'outcomes'
 
-    set_id = db.Column(
+    outcome_id = db.Column(
         db.Integer,
         primary_key=True
     )
