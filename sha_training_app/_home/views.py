@@ -4,6 +4,7 @@ from . import home
 from ..models import User, Account, Role, Course
 from ..forms import LoginForm, RegisterForm
 from sha_training_app import db
+import datetime
 
 
 @home.route('/')
@@ -34,10 +35,13 @@ def register():
         role = Role.query.filter_by(role_id=1).first()
 
         account = Account(
-            role_id=role.role_id
+            role_id=role.role_id,
+            date_joined=datetime.datetime.now(),
+            first_name=register_form.first_name.data,
+            last_name=register_form.last_name.data
         )
 
-        user.account.append(account)
+        user.account = account
 
         db.session.add(user)
         db.session.add(account)

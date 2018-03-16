@@ -24,7 +24,7 @@ def unauthenticated_nav():
 def sec_nav_bar():
     secnav = list(my_nav_bar().items)
 
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and not current_user.account.has_role('admin'):
         secnav.extend([
             View('Account', 'user.account'),
             View('Courses', 'user.course_listing'),
@@ -33,14 +33,16 @@ def sec_nav_bar():
 
     if current_user.account.has_role('admin'):
         secnav.extend([
+            View('Account', 'user.account'),
             View('Admin', 'admin.homepage'),
             View('Users', 'admin.users'),
-            View('Courses', 'admin.courses')
+            View('Courses', 'admin.courses'),
+            View('Log out', 'home.logout')
         ])
     else:
-        secnav.extend(
-            View('Log in', 'security.login')
-        )
+        secnav.extend([
+            View('Log in', 'home.login')
+        ])
     return Navbar(current_app.config.get('SITE_NAME'), *secnav)
 
 

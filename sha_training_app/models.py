@@ -1,8 +1,9 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
-
 from . import db, login_manager
+
+import datetime
 
 
 class User(UserMixin, db.Model):
@@ -280,7 +281,23 @@ class Enrollment(db.Model):
         db.ForeignKey('outcomes.outcome_id')
     )
 
+    modules_completed = relationship(
+        'Module',
+        backref='module',
+        uselist=True
+    )
+
     completed = db.Column(
         db.Boolean,
         default=False
+    )
+
+    date_enrolled = db.Column(
+        db.DateTime,
+        default=datetime.datetime.utcnow()
+    )
+
+    date_completed = db.Column(
+        db.DateTime,
+        nullable=True
     )

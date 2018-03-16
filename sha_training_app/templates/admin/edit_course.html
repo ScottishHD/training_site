@@ -1,5 +1,46 @@
 {% extends 'layout.html' %}
 {% import 'macros.html' as _macros with context %}
 {% block content %}
-    {{ _macros.m_primary_form(form) }}
+
+<form action="{{ url_for('admin.edit_course', course_id=course.course_id) }}" method="post">
+    <div class="form-group row">
+        <div class="col-sm-2">
+            {{ form.title.label }}
+        </div>
+        <div class="col-sm-10">
+            {{ form.title(class="form-control", value=course.title) }}
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            {{ form.description.label }}
+        </div>
+        <div class="col-sm-10">
+            {{ form.description(class="form-control", value=course.description) }}
+        </div>
+    </div>
+    <input type="text" onkeyup="searchModules(this.value)" id="module_search" class="form-control mb-2" placeholder="Search">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for module in modules %}
+        <tr>
+            <td>{{ module.title }}</td>
+            <td>{{ module.description }}</td>
+            <td>
+                <input type="checkbox" name="modules[]" class="form-check-input">
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {{ form.submit(class="btn btn-secondary") }}
+</form>
 {% endblock %}

@@ -1,3 +1,58 @@
 {% extends 'layout.html' %}
 {% block content %}
+<div class="wrapper">
+    <div class="row">
+        <div class="col-2">
+            First Name:
+        </div>
+        <div class="">
+            {{ user.account.first_name }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            Last Name:
+        </div>
+        <div class="">
+            {{ user.account.last_name }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            Username:
+        </div>
+        <div class="">
+            {{ user.username }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            Email:
+        </div>
+        <div class="">
+            {{ user.email }}
+        </div>
+    </div>
+</div>
+<br>
+<h5>ENROLLED COURSES</h5>
+<div class="wrapper">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Course Title</th>
+            <th scope="col">Date Enrolled</th>
+            <th scope="col">Progress</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for course in courses %}
+        <tr>
+            <td>{{ course.title }}</td>
+            <td>{{ course.modified }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

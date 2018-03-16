@@ -1,27 +1,21 @@
 {% if standalone %}
-    {% extends 'layout.html' %}
+{% extends 'layout.html' %}
 {% endif %}
 {% block content %}
-    <div class="flex">
-        {% for course in courses %}
-            <div class="card mb-3" style="width: 18rem;">
-                <img class="card-img-top" src="{{ url_for('static', filename='uploads/images/'+course.image) }}"
-                     alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">{{ course.title }}</h5>
-                    <p class="card-text">{{ course.description }}</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ url_for('user.enrol', course_id=course.course_id) if current_user.is_authenticated else url_for('home.register') }}"
-                       class="btn btn-primary"
-                            {{ 'aria-disabled="true"' if course_id in current_user.account.enrollments.course_id else '' }}
-                    >{{ 'Enrol' if current_user.is_authenticated else 'Sign Up' }}</a>
-
-                    {{ current_user.account.enrollments|count }}
-
-
-                </div>
-            </div>
-        {% endfor %}
+<div class="flex">
+    {% for course in courses %}
+    <div class="card mb-3" style="width: 18rem;">
+        <img class="card-img-top" src="{{ url_for('static', filename='uploads/images/'+course.image) }}"
+             alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{ course.title }}</h5>
+            <p class="card-text">{{ course.description }}</p>
+        </div>
+        <div class="card-footer">
+            <a href="{{ url_for('user.enrol', course_id=course.course_id) if current_user.is_authenticated else url_for('home.register') }}"
+               class="btn btn-primary">{{ 'Enrol' if current_user.is_authenticated else 'Sign Up' }}</a>
+        </div>
     </div>
+    {% endfor %}
+</div>
 {% endblock %}

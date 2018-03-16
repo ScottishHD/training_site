@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, request
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from ..forms import EditCourseForm, DeleteCourseForm, CreateCourseForm
-from ..models import User, Course
+from ..models import User, Course, Module
 from . import admin
 from .. import db, app
 import datetime
@@ -84,10 +84,11 @@ def create_course():
     return render_template('admin/create_course.html', form=course_form)
 
 
-@admin.route('/edit_course/<course_id>')
+@admin.route('/edit_course/<course_id>', methods=['GET', 'POST'])
 @login_required
 def edit_course(course_id):
-    course = Course.query.filter_by(course_id=course_id)
+    course = Course.query.filter_by(course_id=course_id).first()
+    modules = Module.query.all()
 
     edit_form = EditCourseForm(obj=course)
 
@@ -98,7 +99,7 @@ def edit_course(course_id):
         db.session.add(course)
         db.session.commit()
 
-    return render_template('admin/edit_course.html', course=course_id, form=edit_form)
+    return render_template('admin/edit_course.html', course=course, form=edit_form, modules=modules)
 
 
 @admin.route('/delete_course/<course_id>')
@@ -116,8 +117,14 @@ def delete_course(course_id):
 
 @admin.route('/view/<user_id>')
 def view_user(user_id):
-    user = User.query.filter_by(id=user_id)
-    courses = user.account.courses
-    with open(courses, 'r') as course_file:
-        pass
-    return render_template('admin/view_user.html', user=user)
+    user = User.query.filter_by(id=user_id).first()
+    courses = []
+    for enrolled in user.account.enrollments:
+        course = Course.query.filter_by(course_id=enrolled.course_id).first()
+        course.date_enrolled = user.account.enrollments
+        course.modules_completed = enrolled.modules_completed
+        courses.append(course)
+
+        count = 0
+
+    return render_template('admin/view_user.html', user=user, courses=courses)
