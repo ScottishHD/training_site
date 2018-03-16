@@ -4,3 +4,5 @@ jinja_snippet = """
     { % endif %}
     { % endfor %}
 """
+
+# When defining new relationships, put the foreign key before the relationship

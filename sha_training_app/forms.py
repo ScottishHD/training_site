@@ -13,7 +13,7 @@ class RegisterForm(FlaskForm):
 
 class OrganisationRegisterForm(FlaskForm):
     organisation_name = StringField('Organisation Name', validators=[DataRequired()])
-    assigned_person_email = StringField('Assigned Person Email', validators=[DataRequired(), Email()])
+    contact_email = StringField('Assigned Person Email', validators=[DataRequired(), Email()])
     size = IntegerField('Size of Organisation')
     submit = SubmitField('Create Organisation')
 

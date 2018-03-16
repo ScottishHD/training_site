@@ -130,15 +130,20 @@ class Organisation(db.Model):
         db.String(64)
     )
 
+    contact_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id')
+    )
+
     contact = relationship(
         'User',
         backref='user',
         uselist=False
     )
 
-    contact_id = db.Column(
-        db.Integer,
-        db.ForeignKey('users.id')
+    staff = relationship(
+        'User',
+        uselist=True
     )
 
     size = db.Column(
@@ -279,6 +284,3 @@ class Enrollment(db.Model):
         db.Boolean,
         default=False
     )
-
-
-
