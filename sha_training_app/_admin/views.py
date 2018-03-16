@@ -1,9 +1,13 @@
-from flask import render_template, redirect, url_for
+import os
+from flask import render_template, redirect, url_for, request
 from flask_login import login_required, current_user
-from ..forms import EditCourseForm, DeleteCourseForm
+from werkzeug.utils import secure_filename
+from ..forms import EditCourseForm, DeleteCourseForm, CreateCourseForm
 from ..models import User, Course
 from . import admin
-from .. import db
+from .. import db, app
+import datetime
+import json
 
 
 @admin.route('/')
@@ -23,12 +27,19 @@ def homepage():
 def users():
     users = User.query.all()
     for user in users:
-
         user.date_joined = user.account.date_joined
         user.first_name = user.account.first_name
         user.last_name = user.account.last_name
 
     return render_template('admin/users.html', users=users)
+
+
+@admin.route('/search_users')
+def search_users():
+    text = request.args['user']
+    result = User.query.filter_by(username=text)
+
+    return json.dumps({"results": result})
 
 
 @admin.route('/delete_user/<user_id>')
@@ -48,10 +59,29 @@ def courses():
     return render_template('admin/courses.html', courses=courses)
 
 
-@admin.route('/create_course')
+@admin.route('/create_course', methods=['GET', 'POST'])
 @login_required
 def create_course():
-    return render_template('admin/create_course.html')
+    course_form = CreateCourseForm()
+
+    if course_form.validate_on_submit():
+        course = Course()
+        course.title = course_form.course_title.data
+        course.description = course_form.description.data
+        course.author = current_user.id
+        course.modified = datetime.datetime.now()
+
+        file = request.files['image']
+        filename = secure_filename(file.filename)
+        print(filename)
+        file.save(os.path.join(app.root_path, 'static', 'uploads', 'images', filename))
+        # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        course.image = filename
+
+        db.session.add(course)
+        db.session.commit()
+
+    return render_template('admin/create_course.html', form=course_form)
 
 
 @admin.route('/edit_course/<course_id>')
@@ -59,13 +89,11 @@ def create_course():
 def edit_course(course_id):
     course = Course.query.filter_by(course_id=course_id)
 
-    edit_form = EditCourseForm()
+    edit_form = EditCourseForm(obj=course)
 
     if edit_form.validate_on_submit():
         course.title = edit_form.title.data
         course.description = edit_form.description.data
-        # course.modules = course.modules
-        course.image = edit_form.header_image.data
 
         db.session.add(course)
         db.session.commit()
@@ -84,3 +112,12 @@ def delete_course(course_id):
         db.session.commit()
 
     return render_template('admin/delete_course.html', course=course, form=delete_course)
+
+
+@admin.route('/view/<user_id>')
+def view_user(user_id):
+    user = User.query.filter_by(id=user_id)
+    courses = user.account.courses
+    with open(courses, 'r') as course_file:
+        pass
+    return render_template('admin/view_user.html', user=user)

@@ -1,3 +1,19 @@
 {% extends 'layout.html' %}
 {% block content %}
+    <div class="flex">
+        {% for course in courses %}
+            <div class="card mb-3" style="width: 18rem;">
+                <img class="card-img-top" src="{{ url_for('static', filename='uploads/images/'+course.image) }}"
+                     alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.title }}</h5>
+                    <p class="card-text">{{ course.description }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('course.continue_course', course_id=current_user.account.enrollments.course_id, module_id=current_user.account.enrollments.module_id, outcome_id=current_user.account.enrollments.course_id) }}"
+                       class="btn btn-primary">Continue</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

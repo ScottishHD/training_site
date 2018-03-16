@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import PasswordField, StringField, SubmitField, IntegerField, TextAreaField, BooleanField, FileField, FieldList, FormField
+from wtforms import PasswordField, StringField, SubmitField, IntegerField, TextAreaField, BooleanField, FieldList, FormField
 from wtforms.validators import DataRequired, Email, EqualTo
+from flask_wtf.file import FileField
 
 class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -42,7 +43,7 @@ class QuestionForm(FlaskForm):
 class CreateCourseForm(FlaskForm):
     course_title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
-    # Could we suggest modules based on what is entered,  using ajax
+    image = FileField('Header Image', validators=[DataRequired()])
     submit = SubmitField('Create')
 
 class Module(FlaskForm):

@@ -87,9 +87,19 @@ class Account(db.Model):
         db.ForeignKey('roles.role_id')
     )
 
-    courses = db.Column(
-        db.String(64),
-        nullable=True
+    enrollment_id = db.Column(
+        db.Integer,
+        db.ForeignKey('enrollments.enrol_id')
+    )
+
+    enrollments = relationship(
+        'Enrollment',
+        uselist=True,
+    )
+
+    organisation_id = db.Column(
+        db.Integer,
+        db.ForeignKey('organisation.organisation_id')
     )
 
     date_joined = db.Column(
@@ -103,6 +113,9 @@ class Account(db.Model):
     last_name = db.Column(
         db.String(64)
     )
+
+    def has_role(self, role_title):
+        return self.role.title.lower() == role_title.lower()
 
 
 class Organisation(db.Model):
@@ -233,6 +246,39 @@ class Outcome(db.Model):
         db.String(256)
     )
 
-    quiz_link = db.Column(
-        db.String(256)
+
+class Enrollment(db.Model):
+    __tablename__ = 'enrollments'
+
+    enrol_id = db.Column(
+        db.Integer,
+        primary_key=True
     )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id')
+    )
+
+    course_id = db.Column(
+        db.Integer,
+        db.ForeignKey('courses.course_id')
+    )
+
+    module_id = db.Column(
+        db.Integer,
+        db.ForeignKey('modules.module_id')
+    )
+
+    outcome_id = db.Column(
+        db.Integer,
+        db.ForeignKey('outcomes.outcome_id')
+    )
+
+    completed = db.Column(
+        db.Boolean,
+        default=False
+    )
+
+
+

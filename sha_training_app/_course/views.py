@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from ..models import Course, Account, Role, User
 from . import course
 
+
 # The complete listing of courses that are on offer
 @course.route('/listing')
 def full_list():
@@ -16,6 +17,7 @@ def create_course():
         return redirect('home.homepage')
 
     return render_template('course/create.html')
+
 
 @course.route('/enrolled')
 def enrolled():
@@ -35,3 +37,7 @@ def enrolled():
     return """
     <h1>Temporary render</h1>
     """
+
+@course.route('/<course_id>/<module_id>/<outcome_id>')
+def continue_course(course_id, module_id, outcome_id):
+    return render_template('course/outcome.html')

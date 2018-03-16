@@ -1,23 +1,39 @@
 {% extends 'layout.html' %}
 {% block content %}
-  <table class="table">
-    <thead>
-      <td scope="col">Name</td>
-      <td scope="col">Username</td>
-      <td scope="col">Email</td>
-      <td scope="col">Date Joined</td>
-      <td scope="col"></td>
-    </thead>
-    {% for user in users %}
-      <tr>
-        <td>{{ user.first_name }} {{user.last_name}}</td>
-        <td>{{ user.username }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.date_joined }}</td>
-        <td>
-          <a href="{{ url_for('admin.delete_user', user_id=user.id) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+    <label>
+        <input type="text" class="form-control" aria-label="Username" onkeyup="search_user(this.value)">
+    </label>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Date Joined</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        {% for user in users %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('admin.view_user', user_id=user.id) }}">{{ user.first_name }} {{ user.last_name }}</a>
+                </td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.date_joined }}</td>
+                <td>
+                    {% if current_user.id != user.id %}
+                        <a href="{{ url_for('admin.delete_user', user_id=user.id) }}" class="btn btn-danger"><i
+                                class="fa fa-trash"></i> Delete</a>
+                    {% else %}
+                        <a href="{{ url_for('admin.delete_user', user_id=user.id) }}" class="btn btn-danger disabled"><i
+                                class="fa fa-trash" aria-disabled="true"></i> Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
 {% endblock %}

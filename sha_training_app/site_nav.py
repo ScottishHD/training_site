@@ -14,11 +14,11 @@ def my_nav_bar():
 def unauthenticated_nav():
     nav = list(my_nav_bar().items)
 
-    if not current_user.is_authenticated:
-        nav.extend([
-            View('Login', 'home.login'),
-            View('Register', 'home.register')
-        ])
+    nav.extend([
+        View('Login', 'home.login'),
+        View('Register', 'home.register')
+    ])
+    return Navbar(current_app.config.get('SITE_NAME'), *nav)
 
 
 def sec_nav_bar():
@@ -26,17 +26,19 @@ def sec_nav_bar():
 
     if current_user.is_authenticated:
         secnav.extend([
-            View('Account', 'blogging.editor'),
-            View('Profile', 'simple_page.profile'),
+            View('Account', 'user.account'),
+            View('Courses', 'user.course_listing'),
+            View('Log out', 'home.logout')
         ])
 
-    if current_user.has_role('admin'):
-        secnav.append(
-            View('Admin', 'admin.index')
-        )
-        secnav.append(View('Log out', 'security.logout'))
+    if current_user.account.has_role('admin'):
+        secnav.extend([
+            View('Admin', 'admin.homepage'),
+            View('Users', 'admin.users'),
+            View('Courses', 'admin.courses')
+        ])
     else:
-        secnav.append(
+        secnav.extend(
             View('Log in', 'security.login')
         )
     return Navbar(current_app.config.get('SITE_NAME'), *secnav)
@@ -46,5 +48,5 @@ def configure_nav(app):
     nav = Nav()
     nav.register_element('my_nav_bar', my_nav_bar)
     nav.register_element('sec_nav_bar', sec_nav_bar)
-    # nav.register_element('admin_nav_bar', admin_nav_bar)
+    nav.register_element('unauthenticated_nav', unauthenticated_nav)
     nav.init_app(app)

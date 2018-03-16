@@ -46,7 +46,7 @@ class Config(object):
     SECRET_KEY = load_key()
     BCRYPT_LOG_ROUNDS = 13
     WTF_CSRF_ENABLED = True
-    UPLOAD_FOLDER = config.get('uploads_folder_name', 'uploads')
+    UPLOAD_FOLDER = config.get('uploads', 'uploads_folder_name')
 
 
 class DevelopmentConfig(Config):

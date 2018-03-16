@@ -1,4 +1,9 @@
 {% macro m_primary_form(form) %}
+    {% for field, errors in form.errors.items() %}
+        <div class="alert alert-error">
+            {{ form[field].label }}: {{ ', '.join(errors) }}
+        </div>
+    {% endfor %}
     {% for field in form %}
         {% if field.type == 'SubmitField' %}
             <div class="form-group">
@@ -14,6 +19,7 @@
                 <div class="col-2">
                     {{ field.label }}
                 </div>
+                <!-- File Field -->
                 <div class="col-md">
                     {{ field(class="form-control-file") }}
                 </div>

@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 {% import 'macros.html' as _macros %}
 {% block content %}
-  <input type="number" id="no_questions" ><a onclick="createFields" class="btn btn-success">Create</a>
-  {{ _macros.m_primary_form(form) }}
+    {#  <input type="number" id="no_questions" ><a onclick="createFields" class="btn btn-success">Create</a>#}
+    <form action="{{ url_for('admin.create_course') }}" method="post" enctype="multipart/form-data">
+        {{ _macros.m_primary_form(form) }}
+    </form>
 {% endblock %}

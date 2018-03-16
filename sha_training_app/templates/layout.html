@@ -24,13 +24,20 @@
                             <a class="nav-link pl-0 text-nowrap active brand-fs" href="#"><span
                                     class="font-weight-bold">SHA TRAINING</span></a>
                         </li>
-                        {{ nav.my_nav_bar.render() }}
-{#                        {% for item in nav.side %}#}
-{#                            <li class="nav-item">#}
-{#                                <a class="nav-link pl-0 text-nowrap text-white menu-fs {{ 'active' if item.is_active else '' }}"#}
-{#                                   href="{{ item.url }}"><span class="font-weight-bold">{{ item.label }}</span></a>#}
-{#                            </li>#}
-{#                        {% endfor %}#}
+                        {% if nav is defined %}
+                            {% if current_user.is_authenticated %}
+                                {{ nav.sec_nav_bar.render() }}
+                            {% else %}
+                                {{ nav.unauthenticated_nav.render() }}
+                            {% endif %}
+                        {% endif %}
+                        {#                        {{ nav.my_nav_bar.render() }}#}
+                        {#                        {% for item in nav.side %}#}
+                        {#                            <li class="nav-item">#}
+                        {#                                <a class="nav-link pl-0 text-nowrap text-white menu-fs {{ 'active' if item.is_active else '' }}"#}
+                        {#                                   href="{{ item.url }}"><span class="font-weight-bold">{{ item.label }}</span></a>#}
+                        {#                            </li>#}
+                        {#                        {% endfor %}#}
                     </ul>
                 </div>
             </nav>
@@ -52,6 +59,7 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
                     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
                     crossorigin="anonymous"></script>
+            <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
         {% endblock %}
     </div>
 </div>
