@@ -1,7 +1,9 @@
-from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import PasswordField, StringField, SubmitField, IntegerField, TextAreaField, BooleanField, FieldList, FormField
-from wtforms.validators import DataRequired, Email, EqualTo
+from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
+from wtforms import PasswordField, StringField, SubmitField, IntegerField, TextAreaField, BooleanField, FieldList, \
+    FormField
+from wtforms.validators import DataRequired, Email
+
 
 class RegisterForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
@@ -48,7 +50,8 @@ class CreateCourseForm(FlaskForm):
     image = FileField('Header Image', validators=[DataRequired()])
     submit = SubmitField('Create')
 
-class Module(FlaskForm):
+
+class ModuleForm(FlaskForm):
     module_title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
     number_of_questions = IntegerField('Number of questions')
@@ -56,5 +59,8 @@ class Module(FlaskForm):
     submit = SubmitField('Create')
 
 class OutcomeForm(FlaskForm):
-    content = FileField('Content', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
+    external_link = BooleanField('External Video')
+    resource = FileField('Resource File')
+    location = StringField('External URL')
+    submit = SubmitField('Create')

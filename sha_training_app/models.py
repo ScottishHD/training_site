@@ -1,9 +1,10 @@
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy.orm import relationship
-from . import db, login_manager
-
 import datetime
+
+from flask_login import UserMixin
+from sqlalchemy.orm import relationship
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from . import db, login_manager
 
 
 class User(UserMixin, db.Model):
@@ -252,6 +253,11 @@ class Outcome(db.Model):
         db.String(256)
     )
 
+    external = db.Column(
+        db.Boolean,
+        default=False
+    )
+
 
 class Enrollment(db.Model):
     __tablename__ = 'enrollments'
@@ -300,4 +306,30 @@ class Enrollment(db.Model):
     date_completed = db.Column(
         db.DateTime,
         nullable=True
+    )
+
+
+class Question(db.Model):
+    question_id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    question = db.Column(
+        db.String(64)
+    )
+
+    answer = db.Column(
+        db.String(64)
+    )
+
+    module_id = db.Column(
+        db.Integer,
+        db.ForeignKey('modules.module_id')
+    )
+
+    module = relationship(
+        'Module',
+        backref='module',
+        uselist=False
     )

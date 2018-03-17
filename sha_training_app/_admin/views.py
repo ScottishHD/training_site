@@ -8,8 +8,8 @@ from werkzeug.utils import secure_filename
 
 from . import admin
 from .. import db, app
-from ..forms import EditCourseForm, DeleteCourseForm, CreateCourseForm
-from ..models import User, Course, Module, Organisation, Outcome
+from ..forms import EditCourseForm, DeleteCourseForm, CreateCourseForm, OutcomeForm, ModuleForm
+from ..models import User, Course, Module, Organisation, Outcome, Question
 
 
 @admin.route('/')
@@ -144,9 +144,45 @@ def modules():
     return render_template('admin/modules.html', modules=modules)
 
 
+@admin.route('/create_module')
+def create_module():
+    module_form = ModuleForm()
+
+    if module_form.validate_on_submit():
+        module = Module()
+        module.title = module_form.module_title.data
+        module.description = module_form.description.data
+
+        # Save the module to the database first
+        # this way we can reference the module
+        # within the question object, and can
+        # save it directly to the database with
+        # direct relationship link
+        db.session.add(module)
+        db.session.commit()
+
+        for question_iter in module_form.questions:
+            question = Question()
+            question.question = question_iter.question.data
+            question.answer = question_iter.answer.data
+            question.module = module
+
+            db.session.add(question)
+            db.session.commit()
+
+    return render_template('admin/create_module'
+                           '.html')
+
+
 @admin.route('/edit_module/<module_id>')
 def edit_module(module_id):
     module = Module.query.filter_by(module_id=module_id).first()
+    module_form = ModuleForm()
+
+    if module_form.validate_on_submit():
+        module.title = module_form.module_title.data
+        module.description = module_form.description.data
+
     return render_template('admin/edit_module.html', module=module)
 
 
@@ -158,17 +194,48 @@ def delete_module(module_id):
 
 @admin.route('/outcomes')
 def outcomes():
-    modules = Module.query.all()
-    return render_template('admin/outcomes.html', modules=modules)
+    outcomes = Outcome.query.all()
+    return render_template('admin/outcomes.html', outcomes=outcomes)
+
+
+@admin.route('/create_outcome')
+def create_outcome():
+    outcome_form = OutcomeForm()
+
+    if outcome_form.validate_on_submit():
+        outcome = Outcome()
+        if outcome_form.external_link:
+            outcome.resource_link = outcome_form.external_link.data
+        else:
+            outcome.resource_link = outcome_form.resource.data
+
+        outcome.description = outcome_form.description.data
+
+        db.session.add(outcome)
+        db.session.commit()
+
+    return render_template('admin/create_outcome.html')
 
 
 @admin.route('/edit_outcome/<outcome_id>')
 def edit_outcome(outcome_id):
-    outcome = Outcome.query.filter_by(outcome_id=outcome_id).first()
-    return render_template('admin/edit_outcome.html', outcome=outcome)
+    outcome_form = OutcomeForm()
+    outcome = Outcome.query.filter_by(outcome_id=outcome_id)
+
+    if outcome_form.validate_on_submit():
+        if outcome_form.external_link:
+            outcome.resource_link = outcome_form.external_link.data
+        else:
+            outcome.resource_link = outcome_form.resource.data
+
+        outcome.description = outcome_form.description.data
+
+        db.session.add(outcome)
+        db.session.commit()
 
 
 @admin.route('/delete_outcome/<outcome_id>')
 def delete_outcome(outcome_id):
     outcome = Outcome.query.filter_by(outcome_id=outcome_id).first()
+
     return redirect(url_for('admin.outcomes'))

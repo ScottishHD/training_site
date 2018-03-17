@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <a href="{{ url_for('admin.create_outcome') }}" class="btn btn-info mb-3"><i class="fa fa-plus-square"></i> Add
+        Outcome</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Description</th>
+            <th scope="col">External</th>
+            <th scope="col">Link</th>
+            <th scope="col"></th>
+        <tr>
+        </thead>
+        <tbody>
+        {% for outcome in outcomes %}
+            <tr>
+                <td scope="row">{{ outcome.outcome_id }}</td>
+                <td>{{ outcome.description }}</td>
+                <td>
+                    {{ 'Yes' if outcome.external else 'No' }}
+                </td>
+                {% if outcome.external %}
+                    <td>
+                        <a href="{{ outcome.resource_link }}">{{ outcome.resource_link }}</a>
+                    </td>
+                {% else %}
+                    <td>{{ outcome.resource_link }}</td>
+                {% endif %}
+                <td>
+                    <a href="{{ url_for('admin.edit_outcome', module_id=module.id) }}" class="btn btn-success"><i
+                            class="fa fa-pencil"></i> Edit</a>
+                    <a href="{{ url_for('admin.delete_outcome', module_id=module.id) }}" class="btn btn-danger"><i
+                            class="fa fa-trash"></i> Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
