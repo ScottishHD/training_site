@@ -1,13 +1,15 @@
+import datetime
+import json
 import os
+
 from flask import render_template, redirect, url_for, request
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
-from ..forms import EditCourseForm, DeleteCourseForm, CreateCourseForm
-from ..models import User, Course, Module
+
 from . import admin
 from .. import db, app
-import datetime
-import json
+from ..forms import EditCourseForm, DeleteCourseForm, CreateCourseForm
+from ..models import User, Course, Module, Organisation, Outcome
 
 
 @admin.route('/')
@@ -118,7 +120,13 @@ def delete_course(course_id):
 @admin.route('/view/<user_id>')
 def view_user(user_id):
     user = User.query.filter_by(id=user_id).first()
+
     courses = []
+    organisation = None
+
+    if user.account.organisation_id is not None:
+        organisation = Organisation.query.filter_by(organisation_id=user.account.organisation_id).first()
+
     for enrolled in user.account.enrollments:
         course = Course.query.filter_by(course_id=enrolled.course_id).first()
         course.date_enrolled = user.account.enrollments
@@ -127,4 +135,40 @@ def view_user(user_id):
 
         count = 0
 
-    return render_template('admin/view_user.html', user=user, courses=courses)
+    return render_template('admin/view_user.html', user=user, courses=courses, organisation=organisation)
+
+
+@admin.route('/modules')
+def modules():
+    modules = Module.query.all()
+    return render_template('admin/modules.html', modules=modules)
+
+
+@admin.route('/edit_module/<module_id>')
+def edit_module(module_id):
+    module = Module.query.filter_by(module_id=module_id).first()
+    return render_template('admin/edit_module.html', module=module)
+
+
+@admin.route('/delete_module/<module_id>')
+def delete_module(module_id):
+    module = Module.query.filter_by(module_id=module_id).first()
+    return redirect(url_for('admin.modules'))
+
+
+@admin.route('/outcomes')
+def outcomes():
+    modules = Module.query.all()
+    return render_template('admin/outcomes.html', modules=modules)
+
+
+@admin.route('/edit_outcome/<outcome_id>')
+def edit_outcome(outcome_id):
+    outcome = Outcome.query.filter_by(outcome_id=outcome_id).first()
+    return render_template('admin/edit_outcome.html', outcome=outcome)
+
+
+@admin.route('/delete_outcome/<outcome_id>')
+def delete_outcome(outcome_id):
+    outcome = Outcome.query.filter_by(outcome_id=outcome_id).first()
+    return redirect(url_for('admin.outcomes'))

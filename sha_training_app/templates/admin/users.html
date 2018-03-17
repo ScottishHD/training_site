@@ -1,9 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
     <label>
-        <input type="text" class="form-control" aria-label="Username" onkeyup="search_user(this.value)">
+        <input type="text" class="form-control mb-2" aria-label="Username" onkeyup="filterUsers()"
+               placeholder="Search For User" id="users_search">
     </label>
-    <table class="table">
+    <table class="table" id="users_table">
         <thead>
         <tr>
             <th scope="col">Name</th>

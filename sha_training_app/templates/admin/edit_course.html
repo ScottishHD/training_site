@@ -19,8 +19,8 @@
             {{ form.description(class="form-control", value=course.description) }}
         </div>
     </div>
-    <input type="text" onkeyup="searchModules(this.value)" id="module_search" class="form-control mb-2" placeholder="Search">
-    <table class="table">
+    <input type="text" onkeyup="filterModules()" id="module_search" class="form-control mb-2" placeholder="Search">
+    <table class="table" id="modules_table">
         <thead>
         <tr>
             <th scope="col">Title</th>

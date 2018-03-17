@@ -2,29 +2,29 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
 * {
-  font-family: 'Poppins', sans-serif;
-  letter-spacing: 1.5px;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1.5px;
 }
 
 .table thead tr td {
-  color: #004851;
-  font-weight: bold;
-  text-transform: uppercase;
+    color: #004851;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .flex {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .bg-green {
-  background-color: #004851;
+    background-color: #004851;
 }
 
 .active {
-  color: #d2d755!important;
+    color: #d2d755 !important;
 }
 
 body, html {
@@ -33,44 +33,48 @@ body, html {
 }
 
 .brand-fs {
-  font-size: 40px;
+    font-size: 40px;
 }
 
 .menu-fs {
-  font-size: 20px;
+    font-size: 20px;
 }
 
 .pt-20 {
-  padding-top: 20%;
+    padding-top: 20%;
 }
 
 .card.ml-3 {
-  position: relative;
+    position: relative;
 }
 
 .card-title {
-  text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 .card-footer {
-  border-top: none;
+    border-top: none;
 }
 
 .table-fixed thead {
-  width: 97%;
+    width: 97%;
 }
 
 .table-fixed tbody {
-  height: 230px;
-  overflow-y: auto;
-  width: 100%;
+    height: 230px;
+    overflow-y: auto;
+    width: 100%;
 }
 
 .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
-  display: block;
+    display: block;
 }
 
-.table-fixed tbody td, .table-fixed thead > tr> th {
-  float: left;
-  border-bottom-width: 0;
+.table-fixed tbody td, .table-fixed thead > tr > th {
+    float: left;
+    border-bottom-width: 0;
+}
+
+.upper {
+    text-transform: uppercase;
 }

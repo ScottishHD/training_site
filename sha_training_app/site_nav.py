@@ -1,7 +1,7 @@
+from flask import current_app
 from flask_login import current_user
 from flask_nav import Nav
-from flask_nav.elements import Navbar, View, Subgroup
-from flask import current_app
+from flask_nav.elements import Navbar, View
 
 
 def my_nav_bar():
@@ -37,6 +37,8 @@ def sec_nav_bar():
             View('Admin', 'admin.homepage'),
             View('Users', 'admin.users'),
             View('Courses', 'admin.courses'),
+            View('Modules', 'admin.modules'),
+            View('Outcomes', 'admin.outcomes'),
             View('Log out', 'home.logout')
         ])
     else:
