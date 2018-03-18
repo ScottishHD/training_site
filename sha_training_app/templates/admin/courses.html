@@ -18,7 +18,7 @@
                 <td>{{ course.modified }}</td>
                 <td>
                     <a href="{{ url_for('admin.edit_course', course_id=course.course_id) }}" class="btn btn-info"><i
-                            class="fa fa-pencil"></i> Edit</a>
+                            class="fa fa-edit"></i> Edit</a>
                     <a href="{{ url_for('admin.delete_course', course_id=course.course_id) }}" class="btn btn-danger"><i
                             class="fa fa-trash"></i> Delete</a>
                 </td>

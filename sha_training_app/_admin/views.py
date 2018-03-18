@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 from . import admin
 from .. import db, app
 from ..forms import EditCourseForm, DeleteCourseForm, CreateCourseForm, OutcomeForm, ModuleForm
-from ..models import User, Course, Module, Organisation, Outcome, Question
+from ..models import User, Course, Module, Organisation, Outcome, Question, AnswerBank
 
 
 @admin.route('/')
@@ -104,7 +104,7 @@ def edit_course(course_id):
     return render_template('admin/edit_course.html', course=course, form=edit_form, modules=modules)
 
 
-@admin.route('/delete_course/<course_id>')
+@admin.route('/delete_course/<course_id>', methods=['GET', 'POST'])
 @login_required
 def delete_course(course_id):
     delete_form = DeleteCourseForm()
@@ -144,7 +144,7 @@ def modules():
     return render_template('admin/modules.html', modules=modules)
 
 
-@admin.route('/create_module')
+@admin.route('/create_module', methods=['GET', 'POST'])
 def create_module():
     module_form = ModuleForm()
 
@@ -152,6 +152,11 @@ def create_module():
         module = Module()
         module.title = module_form.module_title.data
         module.description = module_form.description.data
+
+        questions = request.form['questions']
+        answers = request.form['answers']
+        fake_answers = request.form['fake_answers']
+        fake_answers = fake_answers.split(',')
 
         # Save the module to the database first
         # this way we can reference the module
@@ -161,20 +166,27 @@ def create_module():
         db.session.add(module)
         db.session.commit()
 
-        for question_iter in module_form.questions:
+        for i in range(0, len(fake_answers)):
+            answer = AnswerBank()
+            answer.answer = fake_answers[i]
+            answer.module_id = module.module_id
+
+            db.session.add(answer)
+            db.session.commit()
+
+        for i in range(0, len(questions)):
             question = Question()
-            question.question = question_iter.question.data
-            question.answer = question_iter.answer.data
+            question.question = questions[i]
+            question.answer = questions[i]
             question.module = module
 
             db.session.add(question)
             db.session.commit()
 
-    return render_template('admin/create_module'
-                           '.html')
+    return render_template('admin/create_module.html', form=module_form)
 
 
-@admin.route('/edit_module/<module_id>')
+@admin.route('/edit_module/<module_id>', methods=['GET', 'POST'])
 def edit_module(module_id):
     module = Module.query.filter_by(module_id=module_id).first()
     module_form = ModuleForm()
@@ -198,14 +210,15 @@ def outcomes():
     return render_template('admin/outcomes.html', outcomes=outcomes)
 
 
-@admin.route('/create_outcome')
+@admin.route('/create_outcome', methods=['GET', 'POST'])
 def create_outcome():
     outcome_form = OutcomeForm()
 
     if outcome_form.validate_on_submit():
         outcome = Outcome()
         if outcome_form.external_link:
-            outcome.resource_link = outcome_form.external_link.data
+            outcome.external = outcome_form.external_link.data
+            outcome.resource_link = outcome_form.location.data
         else:
             outcome.resource_link = outcome_form.resource.data
 
@@ -214,10 +227,10 @@ def create_outcome():
         db.session.add(outcome)
         db.session.commit()
 
-    return render_template('admin/create_outcome.html')
+    return render_template('admin/create_outcome.html', form=outcome_form)
 
 
-@admin.route('/edit_outcome/<outcome_id>')
+@admin.route('/edit_outcome/<outcome_id>', methods=['GET', 'POST'])
 def edit_outcome(outcome_id):
     outcome_form = OutcomeForm()
     outcome = Outcome.query.filter_by(outcome_id=outcome_id)
@@ -234,7 +247,7 @@ def edit_outcome(outcome_id):
         db.session.commit()
 
 
-@admin.route('/delete_outcome/<outcome_id>')
+@admin.route('/delete_outcome/<outcome_id>', methods=['GET', 'POST'])
 def delete_outcome(outcome_id):
     outcome = Outcome.query.filter_by(outcome_id=outcome_id).first()
 

@@ -39,11 +39,6 @@ class DeleteCourseForm(FlaskForm):
     submit = SubmitField('Delete Course')
 
 
-class QuestionForm(FlaskForm):
-    question = StringField('Question', validators=[DataRequired()])
-    answer = StringField('Answer', validators=[DataRequired()])
-
-
 class CreateCourseForm(FlaskForm):
     course_title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
@@ -51,12 +46,18 @@ class CreateCourseForm(FlaskForm):
     submit = SubmitField('Create')
 
 
+class QuestionForm(FlaskForm):
+    question = StringField('Question', validators=[DataRequired()])
+    answer = StringField('Answer', validators=[DataRequired()])
+
+
 class ModuleForm(FlaskForm):
-    module_title = StringField('Title', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
     number_of_questions = IntegerField('Number of questions')
-    questions = FieldList(FormField(QuestionForm))
+    questions = FieldList(FormField(QuestionForm), min_entries=1)
     submit = SubmitField('Create')
+
 
 class OutcomeForm(FlaskForm):
     description = StringField('Description', validators=[DataRequired()])

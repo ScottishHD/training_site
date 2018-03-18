@@ -330,6 +330,22 @@ class Question(db.Model):
 
     module = relationship(
         'Module',
-        backref='module',
+        backref='parent_module',
         uselist=False
+    )
+
+
+class AnswerBank(db.Model):
+    answer_id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    answer = db.Column(
+        db.String(128)
+    )
+
+    module_id = db.Column(
+        db.Integer,
+        db.ForeignKey('modules.module_id')
     )

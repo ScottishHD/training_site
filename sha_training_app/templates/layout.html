@@ -9,6 +9,7 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           crossorigin="anonymous">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
     <title>{{ title }}</title>
 </head>
@@ -17,23 +18,11 @@
 <div class="container-fluid h-100">
     <div class="row h-100">
         <aside class="col-12 col-md-2 p-0 bg-green">
-            <nav class="navbar navbar-expand navbar-dark bg-green flex-md-column flex-row align-items-start py-2">
-                <div class="collapse navbar-collapse">
-                    <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
-                        <li class="nav-item">
-                            <a class="nav-link pl-0 text-nowrap active brand-fs" href="#"><span
-                                    class="font-weight-bold">SHA TRAINING</span></a>
-                        </li>
-                        {% if nav is defined %}
-                            {% if current_user.is_authenticated %}
-                                {{ nav.sec_nav_bar.render() }}
-                            {% else %}
-                                {{ nav.unauthenticated_nav.render() }}
-                            {% endif %}
-                        {% endif %}
-                    </ul>
-                </div>
-            </nav>
+            <a class="nav-link pl-2 text-nowrap active brand-fs" href="#"><span
+                    class="font-weight-bold upper">SHA Training</span></a>
+            {% if nav is defined %}
+                {{ nav.sec_nav_bar.render() }}
+            {% endif %}
         </aside>
 
         <main class="col bg-faded py-3">
@@ -52,6 +41,7 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
                     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
                     crossorigin="anonymous"></script>
+            <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
             <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
         {% endblock %}
     </div>

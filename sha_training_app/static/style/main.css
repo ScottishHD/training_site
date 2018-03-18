@@ -78,3 +78,19 @@ body, html {
 .upper {
     text-transform: uppercase;
 }
+
+.navbar ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.navbar ul li a {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.toggle-off {
+    background-color: #555555;
+    content: 'False';
+}

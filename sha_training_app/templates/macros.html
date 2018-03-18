@@ -10,9 +10,13 @@
                 {{ field(class='form-control btn btn-secondary') }}
             </div>
         {% elif field.type == 'BooleanField' %}
-            <div class="form-check mb-3">
-                {{ field.label(class="form-check-label") }}
-                {{ field(class="form-check-input") }}
+            <div class="form-group row">
+                <div class="col-2">
+                    {{ field.label(class="form-check-label") }}
+                </div>
+                <div class="form-check mb-3 ml-3 col-md">
+                    {{ field(class="form-check-input", data_toggle="toggle") }}
+                </div>
             </div>
         {% elif field.type == 'FileField' %}
             <div class="form-group row">
