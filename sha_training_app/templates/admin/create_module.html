@@ -4,11 +4,12 @@
         <div class="col-2">
             {{ form.number_of_questions.label }}
         </div>
-        <div class="col-md">
-            {{ form.number_of_questions(class_='form-control') }}
+        <div class="col-9">
+            <input type="number" class="form-control" name="number_of_questions" id="number_of_questions">
         </div>
-        <div class="col-md">
-            <button class="btn btn-secondary mb-3" onclick="createQuestions()"><i class="fa fa-plus-square"></i> Add
+        <div class="col">
+            <button class="btn btn-secondary form-control" onclick="createQuestions()"><i class="fa fa-plus-square"></i>
+                Add
             </button>
         </div>
     </div>
@@ -30,32 +31,28 @@
             </div>
         </div>
         <h5 class="upper">Questions</h5>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Question</th>
-                <th scope="col">Answer</th>
-                <th scope="col">Boolean</th>
-            </tr>
-            </thead>
-            <tbody class="questions">
-            <tr class="qfields">
-                <td>
-                    <label for="question" class="sr-only">Question</label>
-                    <input id="question" type="text" name="questions[]" class="form-control">
-                </td>
-                <td>
-                    <label for="answer" class="sr-only">Answer</label>
-                    <input id="answer" type="text" name="answers[]" class="form-control">
-                </td>
-                <td>
-                    <label for="tof" class="sr-only">True or False</label>
-                    <input type="checkbox" id="tof" class="form-check-input ml-3" data-toggle="toggle" data-on="Yes"
-                           data-off="No">
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="inner-container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Question</th>
+                    <th scope="col">Answer</th>
+                </tr>
+                </thead>
+                <tbody class="questions">
+                <tr class="qfields">
+                    <td>
+                        <label for="question" class="sr-only">Question</label>
+                        <input id="question" type="text" name="questions[]" class="form-control">
+                    </td>
+                    <td>
+                        <label for="answer" class="sr-only">Answer</label>
+                        <input id="answer" type="text" name="answers[]" class="form-control">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
         <label for="fake_answers">
             Fake Answers (Seperated with a comma)
         </label>

@@ -11,14 +11,19 @@ def my_nav_bar():
     )
 
 
-def sec_nav_bar():
-    secnav = list(my_nav_bar().items)
+def unauthenticated_nav():
+    unav = list(my_nav_bar().items)
 
     if current_user.is_anonymous:
-        secnav.extend([
+        unav.extend([
             View('Login', 'home.login'),
             View('Register', 'home.register')
         ])
+
+
+def sec_nav_bar():
+    secnav = list(my_nav_bar().items)
+    print(current_user.is_anonymous)
 
     if current_user.is_authenticated and not current_user.account.has_role('admin'):
         secnav.extend([
@@ -41,6 +46,7 @@ def sec_nav_bar():
         secnav.extend([
             View('Log in', 'home.login')
         ])
+
     return Navbar(current_app.config.get('SITE_NAME'), *secnav)
 
 
