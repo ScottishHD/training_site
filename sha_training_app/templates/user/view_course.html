@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <h4>Course Information</h4>
+  <br>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent orci sapien, egestas non ornare ac, interdum ut augue.
+      Morbi id dolor a quam dapibus semper. Fusce ultrices ipsum neque, a ornare arcu pharetra ut. Quisque quis justo et ex condimentum
+      fringilla pellentesque sit amet tellus. Nulla mollis nunc ut placerat condimentum. Ut vitae gravida sapien. Vivamus interdum in diam id dignissim.
+      Maecenas pulvinar neque ac faucibus vestibulum. Maecenas vel congue neque. Nam ex enim, tincidunt eu dignissim et, sagittis vitae massa.
+      Sed vel augue eu nunc aliquet condimentum quis vitae mi.</p>
+  <br>
+      <table class="table">
+          <thead>
+          <tr>
+              <th scope="col">Module Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Progress</th>
+              <th scope="col"></th>
+          <tr>
+          </thead>
+      {% for outcome in outcomes %}
+              <tr>
+                  <td scope="row"></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                      <a href="{{ url_for('modules.html') }}" class="btn btn-primary">View</a>
+                  </td>
+              </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+{% endblock %}

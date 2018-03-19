@@ -30,3 +30,8 @@ def course_listing():
         course = Course.query.filter_by(course_id=enrollment.course_id).first()
         courses.append(course)
     return render_template('user/courses.html', courses=courses)
+
+@user.route('/view_course')
+@login_required
+def view_course():
+    return render_template('user/view_course.html')
