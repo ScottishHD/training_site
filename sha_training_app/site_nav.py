@@ -19,6 +19,7 @@ def unauthenticated_nav():
             View('Login', 'home.login'),
             View('Register', 'home.register')
         ])
+    return Navbar(current_app.config.get('SITE_NAME'), *unav)
 
 
 def sec_nav_bar():
@@ -54,4 +55,5 @@ def configure_nav(app):
     nav = Nav()
     nav.register_element('my_nav_bar', my_nav_bar)
     nav.register_element('sec_nav_bar', sec_nav_bar)
+    nav.register_element('unauthenticated_nav', unauthenticated_nav)
     nav.init_app(app)

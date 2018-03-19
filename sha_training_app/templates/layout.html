@@ -21,7 +21,11 @@
             <a class="nav-link pl-2 text-nowrap active brand-fs" href="#"><span
                     class="font-weight-bold upper">SHA Training</span></a>
             {% if nav is defined %}
-                {{ nav.sec_nav_bar.render() }}
+                {% if current_user.is_authenticated %}
+                    {{ nav.sec_nav_bar.render() }}
+                {% else %}
+                    {{ nav.unauthenticated_nav.render() }}
+                {% endif %}
             {% endif %}
         </aside>
 
