@@ -79,3 +79,7 @@ body, html {
 .fixed {
     position: fixed;
 }
+
+.card-img-top {
+    max-height: 125px;
+}

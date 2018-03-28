@@ -2,6 +2,7 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
 
 from config import app_config
 from .site_nav import configure_nav
@@ -10,6 +11,7 @@ app = Flask(__name__, instance_relative_config=True)
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+csrf = CSRFProtect(app)
 
 
 def create_app(config_name):
@@ -34,11 +36,5 @@ def create_app(config_name):
 
     from sha_training_app._user import user as user_blueprint
     app.register_blueprint(user_blueprint)
-
-    from sha_training_app._course import course as course_blueprint
-    app.register_blueprint(course_blueprint, url_prefix='/course')
-
-    from sha_training_app._organisation import organisation as organisation_blueprint
-    app.register_blueprint(organisation_blueprint, url_prefix='/org')
 
     return app

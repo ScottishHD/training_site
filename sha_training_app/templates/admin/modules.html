@@ -18,9 +18,9 @@
                 <td>{{ module.title }}</td>
                 <td>{{ module.description }}</td>
                 <td>
-                    <a href="{{ url_for('admin.edit_module', module_id=module.id) }}" class="btn btn-success"><i
+                    <a href="{{ url_for('admin.edit_module', module_id=module.module_id) }}" class="btn btn-success"><i
                             class="fa fa-pencil"></i> Edit</a>
-                    <a href="{{ url_for('admin.delete_module', module_id=module.id) }}" class="btn btn-danger"><i
+                    <a href="{{ url_for('admin.delete_module', module_id=module.module_id) }}" class="btn btn-danger"><i
                             class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>

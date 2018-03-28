@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {{ module.title }}
+    {# Assume we have put the video in here #}
+    {% for question in questions %}
+        <div class="row">
+            {{ question.question }}
+            <select>
+                {% for answer in question.answers %}
+                    <option value="{{ answer.answer_id }}">{{ answer.answer }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -28,9 +28,14 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
+# class ModuleListingForm(FlaskForm):
+#     title =
+
+
 class EditCourseForm(FlaskForm):
     title = StringField('Course Title', validators=[DataRequired()])
     description = TextAreaField('Course Description', validators=[DataRequired()])
+    # modules = FieldList('Add Module', FormField(ModuleListingForm))
     submit = SubmitField('Apply')
 
 
@@ -53,9 +58,10 @@ class QuestionForm(FlaskForm):
 
 class ModuleForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[DataRequired()])
+    description = TextAreaField('Description')
     number_of_questions = IntegerField('Number of questions')
     questions = FieldList(FormField(QuestionForm), min_entries=1)
+    false_answers = TextAreaField('False Answers')
     submit = SubmitField('Create')
 
 

@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {% for field, errors in form.errors.items() %}
+        <div class="alert alert-error">
+            {{ form[field].label }}:
+            {% for error in errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <form action="{{ url_for('admin.edit_module', module_id=module.module_id) }}" method="post">
+        <div class="form-group row">
+            <div class="col-2">
+                {{ form.number_of_questions.label }}
+            </div>
+            <div class="col-2">
+                {{ form.number_of_questions(class_="form-control", value=module.number_of_questions) }}
+            </div>
+            <div class="col-1">
+                <button type="button" class="btn btn-secondary form-control edit_add"><i class="fa fa-plus-square"></i>
+                    Add
+                </button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                {{ form.title.label }}
+            </div>
+            <div class="col-md">
+                {{ form.title(class_='form-control', value=module.title) }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                {{ form.description.label }}
+            </div>
+            <div class="col-md">
+                {{ form.description(class_='form-control', value=module.description) }}
+            </div>
+        </div>
+        <h5 class="upper">Questions</h5>
+        <div class="inner-container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Question</th>
+                    <th scope="col">Answer</th>
+                </tr>
+                </thead>
+                <tbody class="questions">
+                {% for question in questions %}
+                    {% for field in form.questions %}
+                        <tr class="qfields">
+                            <td>
+                                {{ field.question(id="question", class_="form-control", value=question.question) }}
+                            </td>
+                            <td>
+                                {{ field.answer(id="answer", class_="form-control", value=question.answer) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {{ form.submit(class_="btn btn-secondary", value="Apply") }}
+    </form>
+{% endblock %}

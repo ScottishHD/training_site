@@ -99,11 +99,6 @@ class Account(db.Model):
         uselist=True,
     )
 
-    organisation_id = db.Column(
-        db.Integer,
-        db.ForeignKey('organisation.organisation_id')
-    )
-
     date_joined = db.Column(
         db.DateTime
     )
@@ -118,40 +113,6 @@ class Account(db.Model):
 
     def has_role(self, role_title):
         return self.role.title.lower() == role_title.lower()
-
-
-class Organisation(db.Model):
-    __tablename__ = 'organisation'
-
-    organisation_id = db.Column(
-        db.Integer,
-        primary_key=True
-    )
-
-    display_name = db.Column(
-        db.String(64)
-    )
-
-    contact_id = db.Column(
-        db.Integer,
-        db.ForeignKey('users.id')
-    )
-
-    contact = relationship(
-        'User',
-        backref='user',
-        uselist=False
-    )
-
-    staff = relationship(
-        'User',
-        uselist=True
-    )
-
-    size = db.Column(
-        db.Integer,
-        nullable=True
-    )
 
 
 class Role(db.Model):
@@ -190,7 +151,7 @@ class Course(db.Model):
         db.ForeignKey('users.id')
     )
 
-    module = relationship(
+    modules = relationship(
         'Module',
         backref='modules'
     )
@@ -226,36 +187,19 @@ class Module(db.Model):
         db.String(256)
     )
 
-    outcome_id = db.Column(
+    number_of_questions = db.Column(
+        db.Integer
+    )
+
+    question_id = db.Column(
         db.Integer,
-        db.ForeignKey('outcomes.outcome_id')
+        db.ForeignKey('questions.question_id')
     )
 
-    outcomes = relationship(
-        'Outcome',
-        backref='modules'
-    )
-
-
-class Outcome(db.Model):
-    __tablename__ = 'outcomes'
-
-    outcome_id = db.Column(
-        db.Integer,
-        primary_key=True
-    )
-
-    resource_link = db.Column(
-        db.String(128)
-    )
-
-    description = db.Column(
-        db.String(256)
-    )
-
-    external = db.Column(
-        db.Boolean,
-        default=False
+    questions = relationship(
+        'Question',
+        backref='questions',
+        uselist=True
     )
 
 
@@ -282,11 +226,6 @@ class Enrollment(db.Model):
         db.ForeignKey('modules.module_id')
     )
 
-    outcome_id = db.Column(
-        db.Integer,
-        db.ForeignKey('outcomes.outcome_id')
-    )
-
     modules_completed = relationship(
         'Module',
         backref='module',
@@ -310,6 +249,8 @@ class Enrollment(db.Model):
 
 
 class Question(db.Model):
+    __tablename__ = 'questions'
+
     question_id = db.Column(
         db.Integer,
         primary_key=True
@@ -321,17 +262,6 @@ class Question(db.Model):
 
     answer = db.Column(
         db.String(64)
-    )
-
-    module_id = db.Column(
-        db.Integer,
-        db.ForeignKey('modules.module_id')
-    )
-
-    module = relationship(
-        'Module',
-        backref='parent_module',
-        uselist=False
     )
 
 

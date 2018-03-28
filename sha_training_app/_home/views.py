@@ -21,7 +21,7 @@ def course_listing():
 
 @home.route('/register', methods=['GET', 'POST'])
 def register():
-    register_form = RegisterForm()
+    register_form = RegisterForm(csrf_enabled=True)
 
     # The user has submitted the form, let's make sure it's valid
     if register_form.validate_on_submit():
@@ -59,11 +59,10 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('user.account'))
 
-    login_form = LoginForm()
+    login_form = LoginForm(csrf_enabled=True)
 
     if login_form.validate_on_submit():
         user = User.query.filter_by(email=login_form.email.data).first()
-        print(user.verify_password(login_form.password.data))
         if user is not None and user.verify_password(login_form.password.data):
             login_user(user)
             return redirect(url_for('user.account'))

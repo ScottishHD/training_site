@@ -40,12 +40,7 @@ def sec_nav_bar():
             View('Users', 'admin.users'),
             View('Courses', 'admin.courses'),
             View('Modules', 'admin.modules'),
-            View('Outcomes', 'admin.outcomes'),
             View('Log out', 'home.logout')
-        ])
-    else:
-        secnav.extend([
-            View('Log in', 'home.login')
         ])
 
     return Navbar(current_app.config.get('SITE_NAME'), *secnav)

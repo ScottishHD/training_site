@@ -1,7 +1,0 @@
-{% extends 'layout.html' %}
-{% import 'macros.html' as macros with context %}
-{% block content %}
-    {% for course in courses %}
-        {{ macros.list_course(course) }}
-    {% endfor %}
-{% endblock %}
